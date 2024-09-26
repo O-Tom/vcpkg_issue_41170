@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Install dependencies
       run: |
@@ -31,13 +31,13 @@ jobs:
         ./bootstrap-vcpkg.sh -disableMetrics
 
     - name: Cache vcpkg
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: ./_vcpkg_
         key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
         
     - name: Upload vcpkg artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: vcpkg
         path: ./_vcpkg_
@@ -50,10 +50,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       
     - name: Download vcpkg artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: vcpkg
         
