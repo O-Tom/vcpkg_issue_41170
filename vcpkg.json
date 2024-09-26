@@ -1,0 +1,15 @@
+{
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+    "name": "pcre2-issue",
+    "version": "0.0.1",
+    "dependencies": [
+        "poco",
+        {
+          "name": "qtbase",
+          "default-features": false,
+          "features": [
+            "thread"
+          ]
+        }
+    ]
+}

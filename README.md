@@ -1,2 +1,3 @@
-# vcpkg_issue_41170
-A sample project to reproduce the vcpkg issue #41170, involving qtbase and poco. [here](https://github.com/microsoft/vcpkg/issues/41170):
+# Undefined pcre2 symbols
+
+Minimal project reproducing the vcpkg issue raised here: https://github.com/microsoft/vcpkg/issues/41170
