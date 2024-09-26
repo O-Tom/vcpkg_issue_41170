@@ -10,7 +10,9 @@ on:
 
 jobs:
   vcpkg_bootstrap:
-    runs-on: debian:stable-slim
+    runs-on: ubuntu-latest
+    container: 
+      image: debian:stable-slim
 
     steps:
     - name: Checkout code
@@ -35,7 +37,9 @@ jobs:
         key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
 
   build:
-    runs-on: debian:stable-slim
+    runs-on: ubuntu-latest
+    container: 
+      image: debian:stable-slim
     needs: vcpkg_bootstrap
 
     steps:
