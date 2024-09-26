@@ -29,12 +29,6 @@ jobs:
         cd _vcpkg_
         git checkout -b specific 3508985146f1b1d248c67ead13f8f54be5b4f5da
         ./bootstrap-vcpkg.sh -disableMetrics
-
-    - name: Cache vcpkg
-      uses: actions/cache@v4
-      with:
-        path: ./_vcpkg_
-        key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
         
     - name: Upload vcpkg artifacts
       uses: actions/upload-artifact@v4
@@ -56,6 +50,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: vcpkg
+        path: ./_vcpkg_
         
     - name: Display structure of working directory files
       run: ls -al
