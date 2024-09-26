@@ -57,7 +57,7 @@ jobs:
         path: ./_vcpkg_
         
     - name: Display structure of working directory files
-      run: ls -al
+      run: ls -al ./_vcpkg_
         
     - name: Install dependencies
       run: |
