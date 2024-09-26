@@ -56,13 +56,10 @@ jobs:
         name: vcpkg
         path: ./_vcpkg_
         
-    - name: Display structure of working directory files
-      run: ls -al ./_vcpkg_
-        
     - name: Install dependencies
       run: |
         apt-get update
-        apt-get install -y build-essential cmake git curl zip unzip pkg-config
+        apt-get install -y build-essential cmake git curl zip unzip pkg-config autoconf
         
     - name: Create build directory
       run: mkdir _build_ && cd _build_
@@ -71,6 +68,6 @@ jobs:
       run: |
         chmod +x ./_vcpkg_/vcpkg
         cd _build_
-        cmake --trace-expand -DCMAKE_BUILD_TYPE=Release ..
+        cmake -DCMAKE_BUILD_TYPE=Release ..
         cmake --build . -j 4
         
