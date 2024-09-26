@@ -11,8 +11,8 @@ on:
 jobs:
   vcpkg_bootstrap:
     runs-on: ubuntu-latest
-    #container: 
-    #  image: debian:stable-slim
+    container: 
+      image: debian:stable-slim
 
     steps:
     - name: Checkout code
@@ -39,8 +39,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    #container: 
-    #  image: debian:stable-slim
+    container: 
+      image: debian:stable-slim
     needs: vcpkg_bootstrap
     
     env:
@@ -70,16 +70,6 @@ jobs:
     - name: Build the project
       run: |
         cd _build_
-        cmake -DCMAKE_BUILD_TYPE=Release ..
+        cmake --trace -DCMAKE_BUILD_TYPE=Release ..
         cmake --build . -j 4
         
-    - name: Collect vcpkg install manifest
-      if: always()
-      run: |
-        ls -alR ./_build_
-        cat _build_/vcpkg-manifest-install.log
-        echo "-----"
-        cat _build_/CMakeCache.txt
-        echo "-----"
-        cat _build_/CMakeFiles/cmake.check_cache
-
