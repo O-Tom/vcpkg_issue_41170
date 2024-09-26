@@ -69,6 +69,7 @@ jobs:
 
     - name: Build the project
       run: |
+        chmod +x ./_vcpkg_/vcpkg
         cd _build_
         cmake --trace-expand -DCMAKE_BUILD_TYPE=Release ..
         cmake --build . -j 4
