@@ -34,6 +34,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: vcpkg
+        include-hidden-files: true # So that .vcpkg-root is included
         path: ./_vcpkg_
 
   build:
