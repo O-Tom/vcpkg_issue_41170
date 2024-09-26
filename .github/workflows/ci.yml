@@ -59,7 +59,7 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get update
-        apt-get install -y build-essential cmake git curl zip unzip pkg-config autoconf automake autoconf-archive libtool
+        apt-get install -y build-essential cmake git curl zip unzip pkg-config autoconf automake autoconf-archive libtool python3
         
     - name: Create build directory
       run: mkdir _build_ && cd _build_
