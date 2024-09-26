@@ -11,8 +11,8 @@ on:
 jobs:
   vcpkg_bootstrap:
     runs-on: ubuntu-latest
-    container: 
-      image: debian:stable-slim
+    #container: 
+    #  image: debian:stable-slim
 
     steps:
     - name: Checkout code
@@ -39,8 +39,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    container: 
-      image: debian:stable-slim
+    #container: 
+    #  image: debian:stable-slim
     needs: vcpkg_bootstrap
     
     env:
