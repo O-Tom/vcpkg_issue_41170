@@ -35,6 +35,12 @@ jobs:
       with:
         path: ./_vcpkg_
         key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+        
+    - name: Upload vcpkg artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: vcpkg
+        path: ./_vcpkg_
 
   build:
     runs-on: ubuntu-latest
@@ -45,7 +51,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
+      
+    - name: Download vcpkg artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: vcpkg
+        
     - name: Install dependencies
       run: |
         apt-get update
