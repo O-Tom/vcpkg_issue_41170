@@ -57,6 +57,9 @@ jobs:
       with:
         name: vcpkg
         
+    - name: Display structure of working directory files
+      run: ls -al
+        
     - name: Install dependencies
       run: |
         apt-get update
