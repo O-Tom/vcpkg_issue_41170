@@ -1,0 +1,57 @@
+name: C++ CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  vcpkg_bootstrap:
+    runs-on: debian:stable-slim
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake git curl zip unzip
+
+    - name: Bootstrap vcpkg
+      run: |
+        git clone https://github.com/microsoft/vcpkg.git ./_vcpkg_
+        cd _vcpkg_
+        git checkout -b specific 3508985146f1b1d248c67ead13f8f54be5b4f5da
+        ./bootstrap-vcpkg.sh -disableMetrics
+
+    - name: Cache vcpkg
+      uses: actions/cache@v2
+      with:
+        path: ./_vcpkg_
+        key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+
+  build:
+    runs-on: debian:stable-slim
+    needs: vcpkg_bootstrap
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake git curl zip unzip pkg-config
+        
+    - name: Create build directory
+      run: mkdir _build_ && cd _build_
+
+    - name: Build the project
+      run: |
+        cd _build_
+        cmake -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build . -j 4
