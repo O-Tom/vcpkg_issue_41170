@@ -77,7 +77,6 @@ jobs:
     - name: Collect vcpkg install manifest
       if: always()
       run: |
-        pwd
-        cd ..
+        ls -al ./_build_
         cat _build_/vcpkg-manifest-install.log
 
