@@ -1,4 +1,4 @@
-name: C++ CI
+dname: C++ CI
 
 on:
   push:
@@ -70,6 +70,6 @@ jobs:
     - name: Build the project
       run: |
         cd _build_
-        cmake --trace -DCMAKE_BUILD_TYPE=Release ..
+        cmake --trace-expand -DCMAKE_BUILD_TYPE=Release ..
         cmake --build . -j 4
         
