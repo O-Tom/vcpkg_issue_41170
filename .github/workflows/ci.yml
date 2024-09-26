@@ -44,6 +44,7 @@ jobs:
     
     env:
       VCPKG_TARGET_TRIPLET: x64-linux  # Define the target triplet
+      VCPKG_ROOT: ./_vcppkg_           # Define the vcpkg directory
 
     steps:
     - name: Checkout code
