@@ -12,7 +12,7 @@
             "description": "Configure with vcpkg toolchain and generate make project files for all configurations",
             "binaryDir": "${sourceDir}/_build_/${presetName}",
             "generator": "Unix Makefiles",
-            "toolchainFile": "${sourceDir}/_vcpkg_/scripts/buildsystems/vcpkg.cmake"
+            "toolchainFile": "$env{VCPKG_ROOT}/_vcpkg_/scripts/buildsystems/vcpkg.cmake"
         }
     ],
     "buildPresets": [
