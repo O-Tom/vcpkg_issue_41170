@@ -12,28 +12,25 @@ on:
 jobs:
   build_with_run_vcpkg:
     runs-on: ubuntu-latest
-
     env:
       VCPKG_DEFAULT_TRIPLET: x64-linux
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Get cmake
+      - name: Get latest cmake
         uses: lukka/get-cmake@latest
       
-      - name: Setup vcpkg
+      - name: Setup vcpkg using vcpkg-configuration.json
         uses: lukka/run-vcpkg@v11
-        id: runvcpkg
         with:
           # This specifies the location of vcpkg, where it is going to be restored from cache, or create from scratch.
           vcpkgDirectory: '${{ github.workspace }}/_vcpkg_'
 
-      - name: Run CMake with vcpkg.json manifest
+      - name: Run cmake using CMakePresets.json & vcpkg.json
         uses: lukka/run-cmake@v10
         with:
-          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+          # These are cmake presets used to configure & build (defined in CMakePresets.json).
           configurePreset: vcpkg-cmake-build
           buildPreset: vcpkg-cmake-release
           
