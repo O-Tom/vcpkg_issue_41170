@@ -48,6 +48,7 @@ jobs:
       - name: Run CMake with vcpkg.json manifest
         uses: lukka/run-cmake@v10
         with:
+          VCPKG_DEFAULT_TRIPLET: x64-linux
           cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
           configurePreset: vcpkg-cmake-build
           buildPreset: vcpkg-cmake-release
