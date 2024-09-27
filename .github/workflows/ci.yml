@@ -13,9 +13,6 @@ jobs:
   build_with_run_vcpkg:
     runs-on: ubuntu-latest
     
-    env:
-      VCPKG_DEFAULT_TRIPLET: x64-linux
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -46,7 +43,7 @@ jobs:
       - name: Run CMake with vcpkg.json manifest
         uses: lukka/run-cmake@v10
         with:
-          cmakeListsTxtPath: './CMakeLists.txt'
+          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
           configurePreset: vcpkg-cmake-build
           buildPreset: vcpkg-cmake-release
           
