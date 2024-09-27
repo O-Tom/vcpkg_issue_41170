@@ -22,14 +22,6 @@ jobs:
       
       - name: Get cmake
         uses: lukka/get-cmake@latest
-        
-      #- name: Dump the content of $RUNNER_TEMP
-      #  shell: bash
-      #  run: find $RUNNER_TEMP
-      
-      #- name: Dump the content of $RUNNER_WORKSPACE
-      #  shell: bash
-      #  run: find $RUNNER_WORKSPACE
       
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
@@ -48,7 +40,6 @@ jobs:
       - name: Run CMake with vcpkg.json manifest
         uses: lukka/run-cmake@v10
         with:
-          VCPKG_DEFAULT_TRIPLET: x64-linux
           cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
           configurePreset: vcpkg-cmake-build
           buildPreset: vcpkg-cmake-release
