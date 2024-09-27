@@ -12,6 +12,9 @@ on:
 jobs:
   build_with_run_vcpkg:
     runs-on: ubuntu-latest
+    
+    env:
+      VCPKG_DEFAULT_TRIPLET: x64-linux
 
     steps:
       - name: Checkout code
