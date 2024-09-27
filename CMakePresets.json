@@ -1,0 +1,34 @@
+{
+    "version": 8,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "vcpkg-cmake-build",
+            "displayName": "Default cmake/vcpkg build",
+            "description": "Configure with vcpkg toolchain and generate make project files for all configurations",
+            "binaryDir": "${sourceDir}/_build_/${presetName}",
+            "generator": "Unix Makefiles",
+            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "vcpkg-cmake-debug",
+            "configurePreset": "vcpkg-cmake-build",
+            "displayName": "Build (Debug)",
+            "description": "Build with vcpkg/cmake/make (Debug)",
+            "configuration": "Debug"
+        },
+        {
+            "name": "vcpkg-cmake-release",
+            "configurePreset": "vcpkg-cmake-build",
+            "displayName": "Build (Release)",
+            "description": "Build with vcpkg/cmake/make (Release)",
+            "configuration": "Release"
+        }
+    ]
+}

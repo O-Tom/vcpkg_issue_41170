@@ -4,74 +4,33 @@ on:
   push:
     branches:
       - main
+      - new-ci-workflow-based-on-run-vcpkg
   pull_request:
     branches:
       - main
 
 jobs:
-  vcpkg_bootstrap:
+  build_with_run_vcpkg:
     runs-on: ubuntu-latest
-    container: 
-      image: debian:stable-slim
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: |
-        apt-get update
-        apt-get install -y build-essential cmake git curl zip unzip
-
-    - name: Bootstrap vcpkg
-      run: |
-        git clone https://github.com/microsoft/vcpkg.git ./_vcpkg_
-        cd _vcpkg_
-        git checkout -b specific 3508985146f1b1d248c67ead13f8f54be5b4f5da
-        ./bootstrap-vcpkg.sh -disableMetrics
-        
-    - name: Upload vcpkg artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: vcpkg
-        include-hidden-files: true # So that .vcpkg-root is included
-        path: ./_vcpkg_
-
-  build:
-    runs-on: ubuntu-latest
-    container: 
-      image: debian:stable-slim
-    needs: vcpkg_bootstrap
-    
     env:
-      VCPKG_TARGET_TRIPLET: x64-linux  # Define the target triplet
-
+      VCPKG_DEFAULT_TRIPLET: x64-linux
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
       
-    - name: Download vcpkg artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: vcpkg
-        path: ./_vcpkg_
-        
-    - name: Install dependencies
-      run: |
-        apt-get update
-        apt-get install -y build-essential cmake git curl zip unzip pkg-config autoconf automake autoconf-archive libtool python3
-        
-    - name: Create build directory
-      run: mkdir _build_ && cd _build_
+      - name: Get latest cmake
+        uses: lukka/get-cmake@latest
+      
+      - name: Setup vcpkg using vcpkg-configuration.json
+        uses: lukka/run-vcpkg@v11
+        with:
+          # This specifies the location of vcpkg, where it is going to be restored from cache, or create from scratch.
+          vcpkgDirectory: '${{ github.workspace }}/_vcpkg_'
 
-    - name: Build the project
-      run: |
-        chmod +x ./_vcpkg_/vcpkg
-        cd _build_
-        cmake -DCMAKE_BUILD_TYPE=Release ..
-        cmake --build . -j 4
-
-    - name: Show error log
-      if: always()
-      run: cat _vcpkg_/buildtrees/libb2/autoconf-x64-linux-err.log
-        
+      - name: Run cmake using CMakePresets.json & vcpkg.json
+        uses: lukka/run-cmake@v10
+        with:
+          # These are cmake presets used to configure & build (defined in CMakePresets.json).
+          configurePreset: vcpkg-cmake-build
+          buildPreset: vcpkg-cmake-release
+          
