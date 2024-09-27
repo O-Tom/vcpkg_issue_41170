@@ -12,19 +12,24 @@ on:
 jobs:
   build_with_run_vcpkg:
     runs-on: ubuntu-latest
+
+    env:
+      VCPKG_DEFAULT_TRIPLET: x64-linux
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - uses: lukka/get-cmake@latest
-      - name: Dump the content of $RUNNER_TEMP
-        shell: bash
-        run: find $RUNNER_TEMP
+      - name: Get cmake
+        uses: lukka/get-cmake@latest
+        
+      #- name: Dump the content of $RUNNER_TEMP
+      #  shell: bash
+      #  run: find $RUNNER_TEMP
       
-      - name: Dump the content of $RUNNER_WORKSPACE
-        shell: bash
-        run: find $RUNNER_WORKSPACE
+      #- name: Dump the content of $RUNNER_WORKSPACE
+      #  shell: bash
+      #  run: find $RUNNER_WORKSPACE
       
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
