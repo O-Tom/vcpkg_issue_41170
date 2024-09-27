@@ -17,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - uses: lukka/get-cmake@v11
+      - uses: lukka/get-cmake@v3
       - name: Dump the content of $RUNNER_TEMP
         shell: bash
         run: find $RUNNER_TEMP
